@@ -1,19 +1,21 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Appliances
+      v-bind:usable="['frigo', 'oven', 'iron', 'chauffage']"
+      v-bind:not_usable="['dishwasher', 'wmachine', 'car', 'baignoire']"
+    />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Appliances from './components/Appliances';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
-}
+    Appliances
+  },
+};
 </script>
 
 <style>
