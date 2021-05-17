@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Weather v-bind:weatherFrom="'Sun'" />
     <Appliances
       v-bind:usable="['frigo', 'oven', 'iron', 'chauffage']"
       v-bind:not_usable="['dishwasher', 'wmachine', 'car', 'baignoire']"
@@ -9,11 +10,12 @@
 
 <script>
 import Appliances from './components/Appliances';
-
+import Weather from './components/Weather';
 export default {
   name: 'App',
   components: {
-    Appliances
+    Appliances,
+    Weather
   },
 };
 </script>
@@ -26,5 +28,13 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+body{
+  background-color: #e2e7e9;
 }
 </style>

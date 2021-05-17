@@ -1,5 +1,5 @@
 <template>
-  <div id="appliances">
+  <div id="right">
     <section id="usable" class="container">
     <h2>Utilisable maintenant</h2>
       <div class='img-container' v-for="img in usable" :key="img" :v-bind="img" :id="img+'-c'" v-bind:style="{order:setOrder(img)}">
@@ -79,10 +79,12 @@ export default {
 </script>
 
 <style scoped>
-#appliances {
+#right {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+  flex-grow: 2;
+  max-width: 1200px;
 }
 #usable {
   background: #d9ead3ff;
@@ -97,7 +99,7 @@ img {
 .container {
   display: flex;
   flex-wrap: wrap;
-  width: 460px;
+  max-width: 460px;
   align-content: flex-start;
   justify-content: center;
   border: 5px solid black;
