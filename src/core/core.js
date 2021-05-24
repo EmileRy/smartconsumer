@@ -2,10 +2,6 @@ const fetch = require("node-fetch");
 
 const SmartConsumerCore = {
 
-    getDevices(locationName){
-        const weather = this.getWeather(locationName);
-    },
-
     getWeather(locationName){
         fetch("http://api.openweathermap.org/data/2.5/weather?appid=cfe72599279e93c9239e58f6c82b29ab&q=" + locationName)
         .then(response => response.text())
