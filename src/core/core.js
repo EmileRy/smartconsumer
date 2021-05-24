@@ -2,12 +2,16 @@ const fetch = require("node-fetch");
 
 const SmartConsumerCore = {
 
+    getDevices(locationName){
+        const weather = this.getWeather(locationName);
+    },
+
     getWeather(locationName){
         fetch("http://api.openweathermap.org/data/2.5/weather?appid=cfe72599279e93c9239e58f6c82b29ab&q=" + locationName)
         .then(response => response.text())
         .then(data => {
             let json = JSON.parse(data);
-            console.log(json.weather[0].main);
+            return json.weather[0].main;
         });
     },
 
@@ -16,7 +20,7 @@ const SmartConsumerCore = {
         .then(response => response.text())
         .then(data => {
             let json = JSON.parse(data);
-            console.log(parseFloat(json.main.temp - 273).toFixed());
+            return parseFloat(json.main.temp - 273).toFixed();
         });
     },
 
@@ -25,7 +29,7 @@ const SmartConsumerCore = {
         .then(response => response.text())
         .then(data => {
             let json = JSON.parse(data);
-            console.log(json.data[0].libelle_qualification_volume);
+            return json.data[0].libelle_qualification_volume;
         });
     }
 
