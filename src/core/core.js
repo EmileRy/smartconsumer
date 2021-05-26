@@ -3,14 +3,9 @@ const appareils = require('./appareils.json')
 
 const SmartConsumerCore = {
 
-    getUsableDevices(locationName){
-        //const weatherData = this.getWeatherData(locationName);
-        //const waterData = this.getWeatherData(locationName);
-        
-        //const electricityLevel = getSolarElectricityAvailabilityLevel(weatherData);
-        //const waterLevel = this.getWaterAvailabilityLevel(waterData);
-        const electricityLevel = 1;
-        const waterLevel = 3;
+    getUsableDevices(weatherData, waterData){
+        const electricityLevel = this.getSolarElectricityAvailabilityLevel(weatherData);
+        const waterLevel = this.getWaterAvailabilityLevel(waterData);
 
         let result = [];
 
@@ -56,24 +51,11 @@ const SmartConsumerCore = {
         });
     },
 
-    getWaterAvailability(waterData){
-        return waterData.data[0].libelle_qualification_volume
-    },
-
-    getWaterAvailabilityLevel(waterData){
-        if(getWaterAvailability(waterData) == "Correcte")
-            return 3;
-        else
-            return 0;
-    },
-
     getSolarElectricityAvailabilityLevel(weatherData){
         var d = new Date();
-        var n = d.getHours();
         if(d.getHours < 6 || d.getHours > 20)
             return 1;
-        //const cloudiness = this.getCloudiness(weatherData);
-        const cloudiness = 50;
+        const cloudiness = this.getCloudiness(weatherData);
         if(cloudiness < 20){
             return 3;
         } else if (cloudiness < 50){
@@ -81,6 +63,17 @@ const SmartConsumerCore = {
         } else {
             return 1;
         }
+    },
+
+    getWaterAvailability(waterData){
+        return waterData.data[0].libelle_qualification_volume
+    },
+
+    getWaterAvailabilityLevel(waterData){
+        if(this.getWaterAvailability(waterData) == "Correcte")
+            return 3;
+        else
+            return 0;
     },
 
 }

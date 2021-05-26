@@ -2,8 +2,8 @@
   <div id="right">
     <section id="usable" class="container">
     <h2>Utilisable maintenant</h2>
-      <div class='img-container' v-for="img in usable" :key="img" :v-bind="img" :id="img+'-c'" v-bind:style="{order:setOrder(img)}">
-        <img :src="require('../assets/image/' + img + '.png')" :alt="img" />
+      <div class='img-container' v-for="img in usable" :key="img.id" :v-bind="img" :id="img.id+'-c'" v-bind:style="{order:setOrder(img.id)}">
+        <img :src="require('../assets/image/' + img.image_name)" :alt="img.name" />
         <svg 
           xmlns="http://www.w3.org/2000/svg"
           viewBox="-10 -30 595 575"
@@ -11,7 +11,7 @@
           v-on:click="toggle_opacity(img)"
         >
           <path
-            :id="img"
+            :id="img.id"
             fill="#FFE87C"
             stroke="black"
             stroke-width="60"
@@ -24,8 +24,8 @@
 
     <section id="not_usable" class="container">
       <h2>Attendre avant d'utiliser</h2>
-      <div class='img-container' v-for="img in not_usable" :key="img" :v-bind="img" :id="img+'-c'" v-bind:style="{order:setOrder(img)}">
-        <img :src="require('../assets/image/' + img + '.png')" :alt="img" />
+      <div class='img-container' v-for="img in not_usable" :key="img.id" :v-bind="img" :id="img.id+'-c'" v-bind:style="{order:setOrder(img.id)}">
+        <img :src="require('../assets/image/' + img.image_name)" :alt="img.name" />
         <svg 
           xmlns="http://www.w3.org/2000/svg"
           viewBox="-10 -30 595 575"

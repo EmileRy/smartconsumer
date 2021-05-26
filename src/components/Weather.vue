@@ -4,12 +4,11 @@
       <input type="text" v-model="textHolder" />
       <img src="../assets/image/search.png" id="search" @click="location"/>
     </div>
-    <div id="weather">
+    <div id="weather" v-if="isLoaded">
       <div id="weatherImg">
         <img
-          src="../assets/image/Sun.png"
+          :src="weatherIconUrl"
           id="image"
-          v-if="weatherIcon === 'Sun'"
         />
       </div>
       <div id="weatherDetail">
@@ -17,35 +16,30 @@
         <div id="weatherText">{{ weather }}</div>
       </div>
     </div>
-    <div id="water">
+    <div id="water" v-if="isLoaded">
       <div id="waterImg">
         <img src="../assets/image/Water.png" id="image" />
       </div>
       <div id="waterDetail">
-        <div id="waterText">{{ waterText }}</div>
-        <div id="detailWaterText">{{ detailWaterText }}</div>
+        <div id="waterText">Quantité d'eau</div>
+        <div id="detailWaterText">{{ water }}</div>
       </div>
     </div>
   </div>
 </template>
 <script>
 
+//import Core from "../core/core.js";
 
 export default {
  devServer: {
     proxy: 'http://localhost:8080'
   },
   name: "Weather",
-  props: ["weatherFrom"],
+  props: ["isLoaded", "weather", "weatherIconUrl", "degre", "water"],
   data: function () {
     return {
-      textHolder: "Troyes",
-      weather: "Ensoleillé",
-      degre: "17",
-      waterText: "Pas d'eau",
-      detailWaterText: "Nappes vides",
-      weatherIcon: this.weatherFrom,
-      isLoaded : false
+      textHolder: "Troyes"
     };
   },
  
@@ -53,24 +47,33 @@ export default {
   
 },
   methods: {
-    
-     async location() {
-    const response = await fetch("http://api.openweathermap.org/data/2.5/weather?appid=cfe72599279e93c9239e58f6c82b29ab&q="+this.textHolder);
-  const data = await response.json();
-  console.log("OK FETCH")
-  this.weather = data.weather[0].main;
-    this.degre = parseFloat(data.main.temp - 273).toFixed();
+    async location() {
+      /*const weatherResponse = await fetch("http://api.openweathermap.org/data/2.5/weather?appid=cfe72599279e93c9239e58f6c82b29ab&q="+this.textHolder);
+      const weatherData = await weatherResponse.json();
 
+      const waterResponse = await fetch("https://hubeau.eaufrance.fr/api/vbeta/prelevements/chroniques?format=json&size=1&nom_commune="+this.textHolder);
+      const waterData = await waterResponse.json();
+
+      this.weather = Core.getWeather(weatherData);
+      this.degre = Core.getTemperature(weatherData);
+      this.weatherIconUrl = Core.getWeatherIconURL(weatherData);
+      this.detailWaterText = Core.getWaterAvailability(waterData);
+
+      let appareils = Core.getUsableDevices(weatherData);
+      appareils.forEach(element => {
+        console.log(element);
+      });*/
+      this.$emit("setLocationName", this.textHolder);
+    },
 },
-  },
 
 watch:{
-      isLoaded(newValue) {
-  if (newValue == true) {
-      console.log("OKKKKK")
-      console.log(this.weather)
+    isLoaded(newValue) {
+      if (newValue == true) {
+        console.log("OKKKKK")
+        console.log(this.weather)
       }
-      }
+    }
   },
 };
 </script>
