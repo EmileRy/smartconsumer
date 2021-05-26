@@ -42,27 +42,8 @@ export default {
       textHolder: "Troyes"
     };
   },
- 
- async created() {
-  
-},
   methods: {
-    async location() {
-      /*const weatherResponse = await fetch("http://api.openweathermap.org/data/2.5/weather?appid=cfe72599279e93c9239e58f6c82b29ab&q="+this.textHolder);
-      const weatherData = await weatherResponse.json();
-
-      const waterResponse = await fetch("https://hubeau.eaufrance.fr/api/vbeta/prelevements/chroniques?format=json&size=1&nom_commune="+this.textHolder);
-      const waterData = await waterResponse.json();
-
-      this.weather = Core.getWeather(weatherData);
-      this.degre = Core.getTemperature(weatherData);
-      this.weatherIconUrl = Core.getWeatherIconURL(weatherData);
-      this.detailWaterText = Core.getWaterAvailability(waterData);
-
-      let appareils = Core.getUsableDevices(weatherData);
-      appareils.forEach(element => {
-        console.log(element);
-      });*/
+    location() {
       this.$emit("setLocationName", this.textHolder);
     },
 },

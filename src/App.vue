@@ -8,6 +8,7 @@
       v-bind:water="water"
       @setLocationName="setLocationName" />
     <Appliances
+      v-bind:isLoaded="isLoaded"
       v-bind:usable="this.usable"
       v-bind:not_usable="this.not_usable"
     />
