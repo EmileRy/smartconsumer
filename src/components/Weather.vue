@@ -2,7 +2,7 @@
   <div id="left">
     <div id="searchBox">
       <input type="text" v-model="textHolder" />
-      <img src="../assets/image/search.png" id="search" />
+      <img src="../assets/image/search.png" id="search" @click="location"/>
     </div>
     <div id="weather">
       <div id="weatherImg">
@@ -29,18 +29,48 @@
   </div>
 </template>
 <script>
+
+
 export default {
+ devServer: {
+    proxy: 'http://localhost:8080'
+  },
   name: "Weather",
   props: ["weatherFrom"],
   data: function () {
     return {
-      textHolder: "Troyes, France",
+      textHolder: "Troyes",
       weather: "Ensoleillé",
       degre: "17",
       waterText: "Pas d'eau",
       detailWaterText: "Nappes vides",
       weatherIcon: this.weatherFrom,
+      isLoaded : false
     };
+  },
+ 
+ async created() {
+  
+},
+  methods: {
+    
+     async location() {
+    const response = await fetch("http://api.openweathermap.org/data/2.5/weather?appid=cfe72599279e93c9239e58f6c82b29ab&q="+this.textHolder);
+  const data = await response.json();
+  console.log("OK FETCH")
+  this.weather = data.weather[0].main;
+    this.degre = parseFloat(data.main.temp - 273).toFixed();
+
+},
+  },
+
+watch:{
+      isLoaded(newValue) {
+  if (newValue == true) {
+      console.log("OKKKKK")
+      console.log(this.weather)
+      }
+      }
   },
 };
 </script>
