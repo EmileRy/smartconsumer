@@ -1,3 +1,7 @@
 const SmartConsumerCore = require("./core.js");
 
-SmartConsumerCore.getWaterAvailability("Troyes");
+let appareils = SmartConsumerCore.getUsableDevices("Troyes")
+
+appareils.forEach(appareil => {
+    console.log(appareil.name);
+})
