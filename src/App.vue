@@ -18,7 +18,7 @@
 <script>
 import Appliances from './components/Appliances';
 import Weather from './components/Weather';
-import Core from "./core/core.js";
+import Core from '../src/core/core';
 
 export default {
   name: 'App',
@@ -35,7 +35,7 @@ export default {
       degre: "",
       water: "",
 
-      appareils: require('./core/appareils.json'),
+      appareils: [],
       usable: [],
       not_usable: [],
     };
@@ -51,13 +51,33 @@ export default {
       const waterResponse = await fetch("https://hubeau.eaufrance.fr/api/vbeta/prelevements/chroniques?format=json&size=1&nom_commune="+name);
       const waterData = await waterResponse.json();
 
+      const appareilsResponse = await fetch("http://localhost:3000/api/appareils");
+      const appareils = await appareilsResponse.json();
+
+      const usableResponse = await fetch("http://localhost:3000/api/location/"+name);
+      const usable = await usableResponse.json();
+
+      let notUsable = [];
+      appareils.forEach(appareil => {
+        var found = false;
+        for(var i = 0; i < usable.length; i++) {
+            if (usable[i].id == appareil.id) {
+                found = true;
+                break;
+            }
+        }
+        if(!found){
+          notUsable.push(appareil);
+        }
+      });
+
+      this.usable = usable;
+      this.not_usable = notUsable;
+
       this.weather = Core.getWeather(weatherData);
       this.degre = Core.getTemperature(weatherData);
       this.weatherIconUrl = Core.getWeatherIconURL(weatherData);
       this.water = Core.getWaterAvailability(waterData);
-
-      this.usable = Core.getUsableDevices(weatherData, waterData);
-      this.not_usable = this.appareils.filter( ( el ) => !this.usable.includes( el ) );
 
       this.isLoaded = true;
     }
