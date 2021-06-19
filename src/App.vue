@@ -48,7 +48,7 @@ export default {
       const weatherResponse = await fetch("http://api.openweathermap.org/data/2.5/weather?appid=cfe72599279e93c9239e58f6c82b29ab&q="+name);
       const weatherData = await weatherResponse.json();
 
-      const waterResponse = await fetch("https://hubeau.eaufrance.fr/api/vbeta/prelevements/chroniques?format=json&size=1&nom_commune="+name);
+      const waterResponse = await fetch("https://hubeau.eaufrance.fr/api/v1/prelevements/chroniques?format=json&size=1&nom_commune="+name);
       const waterData = await waterResponse.json();
 
       const appareilsResponse = await fetch("http://localhost:3000/api/appareils");

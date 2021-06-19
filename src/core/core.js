@@ -1,21 +1,6 @@
 const fetch = require("node-fetch");
-const appareils = require('./appareils.json')
 
 const SmartConsumerCore = {
-
-    getUsableDevices(weatherData, waterData){
-        const electricityLevel = this.getSolarElectricityAvailabilityLevel(weatherData);
-        const waterLevel = this.getWaterAvailabilityLevel(waterData);
-
-        let result = [];
-
-        appareils.forEach(appareil => {
-            if(appareil.levels.electricity <= electricityLevel && appareil.levels.water <= waterLevel)
-                result.push(appareil)
-        })
-
-        return result;
-    },
 
     getWeatherData(locationName){
         fetch("http://api.openweathermap.org/data/2.5/weather?appid=cfe72599279e93c9239e58f6c82b29ab&q=" + locationName)
@@ -43,7 +28,7 @@ const SmartConsumerCore = {
     },
 
     getWaterData(locationName){
-        fetch("https://hubeau.eaufrance.fr/api/vbeta/prelevements/chroniques?format=json&size=1&nom_commune=" + locationName)
+        fetch("https://hubeau.eaufrance.fr/api/v1/prelevements/chroniques?format=json&size=1&nom_commune=" + locationName)
         .then(response => response.text())
         .then(data => {
             let json = JSON.parse(data);
