@@ -45,16 +45,33 @@ export default {
       this.locationName = name;
       console.log(name);
 
-      const weatherResponse = await fetch("http://api.openweathermap.org/data/2.5/weather?appid=cfe72599279e93c9239e58f6c82b29ab&q="+name);
+      let i = 0;
+
+      let weatherResponse = null;
+      while(weatherResponse == null && i < 5){
+        weatherResponse = await fetch("http://api.openweathermap.org/data/2.5/weather?appid=cfe72599279e93c9239e58f6c82b29ab&q="+name);
+      }
       const weatherData = await weatherResponse.json();
 
-      const waterResponse = await fetch("https://hubeau.eaufrance.fr/api/v1/prelevements/chroniques?format=json&size=1&nom_commune="+name);
+      i = 0;
+      let waterResponse = null;
+      while(waterResponse == null && i < 5){
+        waterResponse = await fetch("https://hubeau.eaufrance.fr/api/v1/prelevements/chroniques?format=json&size=1&nom_commune="+name);
+      }
       const waterData = await waterResponse.json();
 
-      const appareilsResponse = await fetch("http://localhost:3000/api/appareils");
+      i = 0;
+      let appareilsResponse = null;
+      while(appareilsResponse == null && i < 5){
+        appareilsResponse = await fetch("http://localhost:3000/api/appareils");
+      }
       const appareils = await appareilsResponse.json();
 
-      const usableResponse = await fetch("http://localhost:3000/api/location/"+name);
+      i = 0;
+      let usableResponse = null;
+      while(usableResponse == null && i < 5){
+        usableResponse = await fetch("http://localhost:3000/api/location/"+name);
+      }
       const usable = await usableResponse.json();
 
       let notUsable = [];
