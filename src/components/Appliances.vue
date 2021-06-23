@@ -73,13 +73,13 @@ export default {
         star.style.fillOpacity = 1;
         this.$cookies.set(e,1);
         container.style.order = 0;
-        axios.put('http://localhost:3000/api/appareils/' + e + '/adduse')
+        axios.post('http://localhost:3000/api/appareils/' + e + '/adduse')
       }
       else{
         star.style.fillOpacity = 0;
         this.$cookies.remove(e);
         container.style.order = 1;
-        axios.put('http://localhost:3000/api/appareils/' + e + '/removeuse')
+        axios.post('http://localhost:3000/api/appareils/' + e + '/removeuse')
       }
     }
   }
