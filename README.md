@@ -1,4 +1,4 @@
-# hello-world
+# Smartconsumer
 
 ## Project setup
 ```
